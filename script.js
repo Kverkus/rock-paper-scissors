@@ -1,8 +1,25 @@
-for (let i = 0; i < 10; i++) {
-  console.log(getComputerChoice());
-}
+let humanScore = 0;
+let computerScore = 0; 
 
-console.log(getHumanChoice());
+playRound(getHumanChoice(), getComputerChoice());
+
+function playRound (humanChoice, computerChoice) {
+  if (humanChoice === computerChoice) {
+    console.log(`Draw, you and your opponents chose ${humanChoice}.`);
+  }
+  else if (
+    (humanChoice === "rock" && computerChoice === "scissors") ||
+    (humanChoice === "paper" && computerChoice === "rock") ||
+    (humanChoice === "scissors" && computerChoice === "paper")
+  ) {
+    console.log(`You win, ${humanChoice} beats ${computerChoice}.`);
+    humanScore += 1;
+  }
+  else {
+    console.log(`You lose, ${computerChoice} beats ${humanChoice}.`);
+    computerScore += 1;
+  }
+}
 
 function getHumanChoice () {
   let choice;
@@ -10,6 +27,8 @@ function getHumanChoice () {
 
   while (isChoiceDone !== true) {
     choice = prompt("Choose rock, paper or scissors.", "rock");
+    choice = choice.toLowerCase;
+
     if (choice !== "rock" && choice !== "paper" && choice !== "scissors") {
       alert("Incorrect choice. You must choose only rock, paper or scissors.");
     }
