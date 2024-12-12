@@ -1,11 +1,36 @@
-let humanScore = 0;
-let computerScore = 0; 
+playGame();
 
-playRound(getHumanChoice(), getComputerChoice());
+function playGame () {
+  let humanScore = 0;
+  let computerScore = 0;
+  let roundResult;
+
+  while (humanScore < 5 && computerScore < 5) {
+    roundResult = playRound(getHumanChoice(), getComputerChoice());
+    if (roundResult === 1) {
+      humanScore += 1;
+    }
+    else if (roundResult === 2) {
+      computerScore += 1;
+    }
+  }
+  
+  showResult(humanScore, computerScore);
+}
+
+function showResult (humanFinalScore, computerFinalScore) {
+  if (humanFinalScore >= 5) {
+    console.log(`You win with ${humanFinalScore}-${computerFinalScore} score.`);
+  }
+  else {
+    console.log(`You lose with ${humanFinalScore}-${computerFinalScore} score.`);
+  }
+}
 
 function playRound (humanChoice, computerChoice) {
   if (humanChoice === computerChoice) {
     console.log(`Draw, you and your opponents chose ${humanChoice}.`);
+    return 0;
   }
   else if (
     (humanChoice === "rock" && computerChoice === "scissors") ||
@@ -13,11 +38,11 @@ function playRound (humanChoice, computerChoice) {
     (humanChoice === "scissors" && computerChoice === "paper")
   ) {
     console.log(`You win, ${humanChoice} beats ${computerChoice}.`);
-    humanScore += 1;
+    return 1;
   }
   else {
     console.log(`You lose, ${computerChoice} beats ${humanChoice}.`);
-    computerScore += 1;
+    return 2;
   }
 }
 
@@ -27,7 +52,7 @@ function getHumanChoice () {
 
   while (isChoiceDone !== true) {
     choice = prompt("Choose rock, paper or scissors.", "rock");
-    choice = choice.toLowerCase;
+    choice = choice.toLowerCase();
 
     if (choice !== "rock" && choice !== "paper" && choice !== "scissors") {
       alert("Incorrect choice. You must choose only rock, paper or scissors.");
